@@ -20,4 +20,8 @@ composer create-project symfony/website-skeleton app
 mv /home/application/app/* /app/
 mv /home/application/app/.[!.]* /app/
 ```
-
+Add to `phpfpm` service in `docker-compose.yml`
+```
+    env_file:
+    - ../.env
+```
