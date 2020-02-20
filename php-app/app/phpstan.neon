@@ -1,0 +1,13 @@
+#It is example of configuration.
+#Add needed configuration
+#For static analysis
+parameters:
+    reportUnmatchedIgnoredErrors: false
+    ignoreErrors:
+      - '#an unknown class ZMQ#'
+      - '#function call_user_func_array expects callable, array#'
+      - '#Parameter .+ of static method.+DoctrineSpecification.+expects string.+given#'
+      - '#array<string>\|string\|null given#'
+      - '#getSpec\(\) should return Happyr.*Specification.*returns Happyr#'
+      - '#loadUserByUsername\(\) should return Symfony.*UserInterface#'
+      - '#Denpa\\Bitcoin#'
