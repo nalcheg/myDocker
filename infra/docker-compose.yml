@@ -1,0 +1,97 @@
+version: '3.7'
+
+services:
+
+  # POSTGRESQL_DSN: "pgsql://postgres:secret@postgres.infranet:5432/test?server_version=12&charset=utf8"
+  postgres:
+    image: postgres
+    ports:
+      - 127.0.0.1:55432:5432
+    volumes:
+      - postgresql-volume:/var/lib/postgresql/data
+      - ./postgres/initial.sql:/docker-entrypoint-initdb.d/initial.sql
+      - ./postgres/initial.sh:/docker-entrypoint-initdb.d/initial.sh
+    environment:
+      POSTGRES_DB: "test"
+      POSTGRES_USER: "postgres"
+      POSTGRES_PASSWORD: "secret"
+    networks:
+      infranet:
+        aliases:
+          - postgres.infranet
+
+  mysql:
+    image: mysql:5.7
+    ports:
+      - 127.0.0.1:3306:3306
+    volumes:
+      - mysql-volume:/var/lib/mysql
+    environment:
+      - MYSQL_ROOT_PASSWORD=secret
+      - MYSQL_DATABASE=test
+    networks:
+      infranet:
+        aliases:
+          - mysql.infranet
+
+  clickhouse:
+    image: yandex/clickhouse-server
+    ports:
+      - 127.0.0.1:19000:9000
+      - 127.0.0.1:18123:8123
+      - 127.0.0.1:19009:9009
+    volumes:
+      - clickhouse-volume:/var/lib/clickhouse
+#      - ./config:/etc/clickhouse-server
+    networks:
+      infranet:
+        aliases:
+          - clickhouse.infranet
+
+  mongo:
+    image: mongo:4.2
+    ports:
+      - 127.0.0.1:27017:27017
+    volumes:
+      - mongo-volume:/data/db
+    networks:
+      infranet:
+        aliases:
+          - mongo.infranet
+
+  redis:
+    image: redis:5
+    ports:
+      - 127.0.0.1:6379:6379
+    networks:
+      infranet:
+        aliases:
+          - redis.infranet
+
+  rabbitmq:
+    image: rabbitmq:management
+    ports:
+      - 127.0.0.1:5672:5672
+      - 127.0.0.1:15672:15672
+    volumes:
+      - rabbitmq-volume:/var/lib/rabbitmq
+    environment:
+      RABBITMQ_DEFAULT_USER: guest
+      RABBITMQ_DEFAULT_PASS: guest
+      RABBITMQ_DEFAULT_VHOST: /
+    networks:
+      infranet:
+        aliases:
+          - rabbitmq.infranet
+
+networks:
+  infranet:
+    external:
+      name: infranet
+
+volumes:
+  postgresql-volume:
+  mysql-volume:
+  clickhouse-volume:
+  mongo-volume:
+  rabbitmq-volume:
