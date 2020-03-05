@@ -19,17 +19,27 @@ services:
     build:
       context: docker
       dockerfile: development/php-fpm/Dockerfile
-      args:
-        USER_ID: ${USER_ID}
-        GROUP_ID: ${GROUP_ID}
     env_file:
       - .env
-      - app/.env
+#      - app/.env
     networks:
       - default
       - infranet
     volumes:
       - ./app:/app
+
+  php-xdebug-memprof-fpm:
+    build:
+      context: docker
+      dockerfile: development/php-xdebug-memprof-fpm/Dockerfile
+    env_file:
+      - .env
+#      - app/.env
+    networks:
+      - default
+      - infranet
+    volumes:
+      - ./app/:/app
 
   php-cli:
     build:
@@ -40,7 +50,7 @@ services:
         GROUP_ID: ${GROUP_ID}
     env_file:
       - .env
-      - app/.env
+#      - app/.env
     networks:
       - default
       - infranet

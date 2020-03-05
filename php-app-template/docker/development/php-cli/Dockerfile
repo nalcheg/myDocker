@@ -11,13 +11,17 @@ RUN mv $PHP_INI_DIR/php.ini-development $PHP_INI_DIR/php.ini
 
 COPY ./development/php/conf.d /usr/local/etc/php/conf.d
 
+RUN apk update && apk add git
+
 # You should merge all `RUN docker-php-ext-install something` in one string
-RUN apk update && apk add postgresql-dev unzip \
+RUN apk add postgresql-dev unzip \
     && docker-php-ext-configure pgsql -with-pgsql=/usr/local/pgsql \
     && docker-php-ext-install pdo_pgsql
 RUN docker-php-ext-install mysqli pdo_mysql
 RUN docker-php-ext-install bcmath
 RUN docker-php-ext-install pcntl
+
+RUN rm -rf /tmp/* /var/cache/apk/*
 
 RUN curl -sS https://getcomposer.org/installer | php -- --install-dir=/bin --filename=composer --quiet
 
