@@ -21,10 +21,10 @@ composer-install-phpstan:
 composer-install-security-advisories:
 	docker-compose run --rm php-cli composer require --dev roave/security-advisories
 
-composer-cs-check:
-	docker-compose run --rm php-cli composer cs-check
-composer-cs-fix:
-	docker-compose run --rm php-cli composer cs-fix
+cs-check:
+	docker-compose run --rm php-cli php-cs-fixer -v fix --config=.php_cs --dry-run --diff
+cs-fix:
+	docker-compose run --rm php-cli php-cs-fixer -v fix --config=.php_cs --diff
 
 composer-phpstan:
 	docker-compose run --rm php-cli composer phpstan
