@@ -30,4 +30,4 @@ composer-phpstan:
 	docker-compose run --rm php-cli composer phpstan
 
 composer-install:
-	docker-compose run --rm php-cli composer install
+	docker-compose run -e GIT_SSH_COMMAND="ssh -o UserKnownHostsFile=/dev/null -o StrictHostKeyChecking=no" --rm php-cli composer install
