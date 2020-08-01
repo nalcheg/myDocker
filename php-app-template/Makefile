@@ -19,7 +19,7 @@ composer-install-php-cs-fixer:
 composer-install-phpstan:
 	docker-compose run --rm php-cli composer require --dev phpstan/phpstan
 composer-install-security-advisories:
-	docker-compose run --rm php-cli composer require --dev roave/security-advisories
+	docker-compose run --rm php-cli composer require --dev roave/security-advisories:dev-master
 
 cs-check:
 	docker-compose run --rm php-cli php-cs-fixer -v fix --config=.php_cs --dry-run --diff
