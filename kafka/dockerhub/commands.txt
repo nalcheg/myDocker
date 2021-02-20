@@ -1,0 +1,2 @@
+docker exec kafka_kafka_1 /opt/kafka/bin/kafka-topics.sh --list --zookeeper zookeeper:2181
+docker exec kafka_kafka_1 /opt/kafka/bin/kafka-console-producer.sh --broker-list zookeeper:2181 --topic Generated
